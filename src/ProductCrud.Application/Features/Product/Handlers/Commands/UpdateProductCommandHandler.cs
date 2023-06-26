@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using ProductCrud.Application.Contracts.Persistence;
+using ProductCrud.Application.Validators.Product;
+using ProductCrud.Application.Exceptions;
 using ProductCrud.Application.Features.Product.Requests.Commands;
 using MediatR;
 using System;
@@ -23,7 +25,15 @@ namespace ProductCrud.Application.Features.product.Handlers.Commands
 
         public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await _productRepository.Get(request.ProductDto.Id) ?? throw new Exception();
+            var product = await _productRepository.Get(request.ProductDto.Id) ?? throw new NotFoundException(nameof(Domain.Entities.Product), request.ProductDto.Id);
+
+            var validator = new ProductUpdateDtoValidator(_productRepository);
+            var validationResult = await validator.ValidateAsync(request.ProductDto);
+
+            if (validationResult.IsValid == false)
+            {
+                throw new ValidationException(validationResult);
+            }
 
             if (request.ProductDto != null)
             {

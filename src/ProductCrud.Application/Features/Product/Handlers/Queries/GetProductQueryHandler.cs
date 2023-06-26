@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ProductCrud.Application.Contracts.Persistence;
 using ProductCrud.Application.DTOs.Product;
+using ProductCrud.Application.Exceptions;
 using ProductCrud.Application.Features.Product.Requests.Queries;
 using MediatR;
 using System;
@@ -28,7 +29,7 @@ namespace ProductCrud.Application.Features.Product.Handlers.Queries
 
             if (product == null)
             {
-                throw new Exception();
+                throw new NotFoundException(nameof(Domain.Entities.Product), request.Id);
             }
 
             return _mapper.Map<ProductGetDto>(product);
