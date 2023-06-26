@@ -1,13 +1,8 @@
-﻿using ProductCrud.Application.Contracts.Persistence;
-using ProductCrud.Persistence.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ProductCrud.Application.Contracts.Persistence;
+using ProductCrud.Persistence.Repositories;
 
 namespace ProductCrud.Persistence
 {
